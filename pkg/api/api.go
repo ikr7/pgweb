@@ -537,7 +537,7 @@ func GetTablesStats(c *gin.Context) {
 	case "json":
 		c.JSON(http.StatusOK, res)
 	case "csv":
-		c.Data(http.StatusOK, "text/csv", res.CSV())
+		c.Data(http.StatusOK, "text/csv", res.CSV(','))
 	case "xml":
 		c.XML(200, res)
 	default:
@@ -568,12 +568,15 @@ func HandleQuery(query string, c *gin.Context) {
 	}
 
 	if format != "" {
-		c.Writer.Header().Set("Content-disposition", "attachment;filename="+filename)
+		// c.Writer.Header().Set("Content-disposition", "attachment;filename="+filename)
+		c.Writer.Header().Set("Content-Type", "text/plain; charset=utf-8")
 	}
 
 	switch format {
 	case "csv":
-		c.Data(200, "text/csv", result.CSV())
+		c.Data(200, "text/csv", result.CSV(','))
+	case "tsv":
+		c.Data(200, "text/tsv", result.CSV('\t'))
 	case "json":
 		c.Data(200, "application/json", result.JSON())
 	case "xml":

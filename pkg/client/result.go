@@ -128,9 +128,10 @@ func (res *Result) Format() []map[string]interface{} {
 	return items
 }
 
-func (res *Result) CSV() []byte {
+func (res *Result) CSV(delimiter rune) []byte {
 	buff := &bytes.Buffer{}
 	writer := csv.NewWriter(buff)
+	writer.Comma = delimiter
 
 	if err := writer.Write(res.Columns); err != nil {
 		log.Printf("result csv write error: %v\n", err)

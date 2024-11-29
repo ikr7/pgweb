@@ -1544,6 +1544,10 @@ $(document).ready(function() {
     exportTo("csv");
   });
 
+  $("#tsv").on("click", function() {
+    exportTo("tsv");
+  });
+
   $("#json").on("click", function() {
     exportTo("json");
   });
